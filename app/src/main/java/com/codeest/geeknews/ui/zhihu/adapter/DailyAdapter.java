@@ -2,6 +2,7 @@ package com.codeest.geeknews.ui.zhihu.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codeest.geeknews.R;
+import com.codeest.geeknews.app.App;
 import com.codeest.geeknews.component.ImageLoader;
 import com.codeest.geeknews.model.bean.DailyBeforeListBean;
 import com.codeest.geeknews.model.bean.DailyListBean;
@@ -87,7 +89,7 @@ public class DailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(  RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ContentViewHolder) {
             final int contentPosition;
             if(isBefore) {
@@ -95,18 +97,23 @@ public class DailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             } else {
                 contentPosition = position - 2;
             }
-            ((ContentViewHolder)holder).title.setText(mList.get(contentPosition).getTitle());
-            if (mList.get(contentPosition).getReadState()) {
+            final DailyListBean.StoriesBean listItem = mList.get(contentPosition);
+            ((ContentViewHolder)holder).title.setText(listItem
+                                                           .getTitle());
+            if (listItem
+                     .getReadState()) {
                 ((ContentViewHolder)holder).title.setTextColor(ContextCompat.getColor(mContext,R.color.news_read));
             } else {
                 ((ContentViewHolder)holder).title.setTextColor(ContextCompat.getColor(mContext,R.color.news_unread));
             }
-            ImageLoader.load(mContext,mList.get(contentPosition).getImages().get(0),((ContentViewHolder)holder).image);
+            final String url = listItem.getImages().get(0);
+            ImageLoader.load(mContext,url, ((ContentViewHolder)holder).image);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(onItemClickListener != null) {
                         ImageView iv = (ImageView) view.findViewById(R.id.iv_daily_item_image);
+                        ViewCompat.setTransitionName(iv, App.getInstance().getString(R.string.transition_share_item_name) + "-" +  url);
                         onItemClickListener.onItemClick(contentPosition,iv);
                     }
                 }

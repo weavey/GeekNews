@@ -2,6 +2,7 @@ package com.codeest.geeknews.ui.zhihu.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codeest.geeknews.R;
+import com.codeest.geeknews.app.App;
 import com.codeest.geeknews.component.ImageLoader;
 import com.codeest.geeknews.model.bean.HotListBean;
 import com.codeest.geeknews.widget.SquareImageView;
@@ -48,18 +50,24 @@ public class HotAdapter extends RecyclerView.Adapter<HotAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.title.setText(mList.get(position).getTitle());
-        if (mList.get(position).getReadState()) {
+        final HotListBean.RecentBean listItem = mList.get(position);
+        holder.title.setText(listItem
+                                  .getTitle());
+        if (listItem
+                 .getReadState()) {
             holder.title.setTextColor(ContextCompat.getColor(mContext,R.color.news_read));
         } else {
             holder.title.setTextColor(ContextCompat.getColor(mContext,R.color.news_unread));
         }
-        ImageLoader.load(mContext,mList.get(position).getThumbnail(),holder.image);
+        final String url = listItem
+                .getThumbnail();
+        ImageLoader.load(mContext, url, holder.image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(onItemClickListener != null) {
                     ImageView iv = (ImageView) view.findViewById(R.id.iv_daily_item_image);
+                    ViewCompat.setTransitionName(iv, App.getInstance().getString(R.string.transition_share_item_name) + "-" + url);
                     onItemClickListener.onItemClick(holder.getAdapterPosition(),iv);
                 }
             }

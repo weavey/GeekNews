@@ -3,6 +3,7 @@ package com.codeest.geeknews.base;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -98,6 +99,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends SupportActiv
                     AppCompatDelegate.MODE_NIGHT_NO);
         }
         recreate();
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            pop();
+        } else {
+            ActivityCompat.finishAfterTransition(this);
+        }
     }
 
     protected abstract void initInject();
