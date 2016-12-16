@@ -2,6 +2,7 @@ package com.codeest.geeknews.ui.zhihu.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.codeest.geeknews.R;
+import com.codeest.geeknews.app.App;
 import com.codeest.geeknews.component.ImageLoader;
 import com.codeest.geeknews.model.bean.ThemeChildListBean;
 import com.codeest.geeknews.util.ImageUtil;
@@ -69,33 +71,44 @@ public class ThemeChildAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof ViewHolder) {
-            if (mList.get(position).getImages() != null && mList.get(position).getImages().size() > 0) {
-                ImageLoader.load(mContext,mList.get(position).getImages().get(0),((ViewHolder) holder).image);
+        if (holder instanceof ViewHolder) {
+            final ThemeChildListBean.StoriesBean listItem = mList.get(position);
+            final StringBuilder url = new StringBuilder("");
+            if (listItem.getImages() != null && listItem.getImages()
+                                                        .size() > 0) {
+                url.append(listItem.getImages()
+                                   .get(0));
+                ImageLoader.load(mContext, url.toString(), ((ViewHolder) holder).image);
             }
-            ((ViewHolder) holder).title.setText(mList.get(position).getTitle());
+            ((ViewHolder) holder).title.setText(listItem.getTitle());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(onItemClickListener != null) {
+                    if (onItemClickListener != null) {
                         SquareImageView iv = (SquareImageView) view.findViewById(R.id.iv_daily_item_image);
-                        onItemClickListener.onItemClick(holder.getAdapterPosition(),iv);
+                        ViewCompat.setTransitionName(iv,
+                                                     App.getInstance()
+                                                        .getString(R.string.transition_share_item_name) + "-" + url);
+                        onItemClickListener.onItemClick(holder.getAdapterPosition(), iv);
                     }
                 }
             });
-        } else if(holder instanceof TopViewHolder) {
+        } else if (holder instanceof TopViewHolder) {
             if (url != null) {
-                ImageLoader.load(mContext, url, ((TopViewHolder)holder).ivOrigin);
-                ivOrigin = ((TopViewHolder)holder).ivOrigin;
-                Glide.with(mContext).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        ((TopViewHolder)holder).ivBlur.setImageBitmap(ImageUtil.doBlur(resource, 50 , true));
-                    }
-                });
+                ImageLoader.load(mContext, url, ((TopViewHolder) holder).ivOrigin);
+                ivOrigin = ((TopViewHolder) holder).ivOrigin;
+                Glide.with(mContext)
+                     .load(url)
+                     .asBitmap()
+                     .into(new SimpleTarget<Bitmap>() {
+                         @Override
+                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                             ((TopViewHolder) holder).ivBlur.setImageBitmap(ImageUtil.doBlur(resource, 50, true));
+                         }
+                     });
             }
             if (des != null) {
-                ((TopViewHolder)holder).tvDes.setText(des);
+                ((TopViewHolder) holder).tvDes.setText(des);
             }
         }
     }

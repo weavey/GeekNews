@@ -3,6 +3,7 @@ package com.codeest.geeknews.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -93,7 +94,7 @@ public class App extends Application{
         if (allActivities != null) {
             synchronized (allActivities) {
                 for (Activity act : allActivities) {
-                    act.finish();
+                    ActivityCompat.finishAfterTransition(act);
                 }
             }
         }

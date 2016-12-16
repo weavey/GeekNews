@@ -1,8 +1,10 @@
 package com.codeest.geeknews.ui.zhihu.fragment;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +50,8 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
     DailyAdapter mAdapter;
     List<DailyListBean.StoriesBean> mList = new ArrayList<>();
 
+    private int position = -1;
+
     @Override
     protected void initInject() {
         getFragmentComponent().inject(this);
@@ -67,16 +71,14 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
             public void onItemClick(int position,View shareView) {
                 mPresenter.insertReadToDB(mList.get(position).getId());
                 mAdapter.setReadState(position,true);
-                if(mAdapter.getIsBefore()) {
-                    mAdapter.notifyItemChanged(position + 1);
-                } else {
-                    mAdapter.notifyItemChanged(position + 2);
-                }
+                DailyFragment.this.position = position;
                 Intent intent = new Intent();
                 intent.setClass(mContext, ZhihuDetailActivity.class);
                 intent.putExtra("id",mList.get(position).getId());
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(mActivity, shareView, "shareView");
-                mContext.startActivity(intent,options.toBundle());
+                String transitionSharedItemName = ViewCompat.getTransitionName(shareView);
+                intent.putExtra("shared-item-name", transitionSharedItemName);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, shareView, transitionSharedItemName);
+                ActivityCompat.startActivity(mActivity, intent, options.toBundle());
             }
         });
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -97,6 +99,25 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
         rvDailyList.setAdapter(mAdapter);
         viewLoading.start();
         mPresenter.getDailyData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdapter == null || position < 0) {
+            return;
+        }
+        if (mAdapter.getIsBefore()) {
+            mAdapter.notifyItemChanged(position + 1);
+        } else {
+            mAdapter.notifyItemChanged(position + 2);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        position = -1;
     }
 
     /**

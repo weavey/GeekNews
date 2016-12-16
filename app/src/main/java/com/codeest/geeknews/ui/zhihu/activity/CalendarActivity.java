@@ -1,6 +1,7 @@
 package com.codeest.geeknews.ui.zhihu.activity;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 
 import com.codeest.geeknews.R;
@@ -54,6 +55,6 @@ public class CalendarActivity extends SimpleActivity {
     @OnClick(R.id.tv_calender_enter)
     void chooseDate() {
         RxBus.getDefault().post(mDate);
-        finish();
+        ActivityCompat.finishAfterTransition(this);
     }
 }

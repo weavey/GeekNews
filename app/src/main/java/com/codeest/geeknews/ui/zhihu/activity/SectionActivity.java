@@ -1,7 +1,9 @@
 package com.codeest.geeknews.ui.zhihu.activity;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +45,8 @@ public class SectionActivity extends BaseActivity<SectionChildPresenter> impleme
     int id;
     String title;
 
+    private int position = -1;
+
     @Override
     protected void initInject() {
         getActivityComponent().inject(this);
@@ -74,19 +78,35 @@ public class SectionActivity extends BaseActivity<SectionChildPresenter> impleme
             public void OnItemClick(int position, View shareView) {
                 mPresenter.insertReadToDB(mList.get(position).getId());
                 mAdapter.setReadState(position, true);
-                mAdapter.notifyItemChanged(position);
+                SectionActivity.this.position = position;
                 Intent intent = new Intent();
                 intent.setClass(mContext, ZhihuDetailActivity.class);
                 intent.putExtra("id", mList.get(position).getId());
+                String transitionSharedItemName = ViewCompat.getTransitionName(shareView);
+                intent.putExtra("shared-item-name", transitionSharedItemName);
                 if (shareView != null) {
-                    mContext.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mContext, shareView, "shareView").toBundle());
+                    ActivityCompat.startActivity(SectionActivity.this, intent, ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, shareView, transitionSharedItemName).toBundle());
                 } else {
-                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mContext).toBundle());
+                    ActivityCompat.startActivity(SectionActivity.this, intent, ActivityOptionsCompat.makeBasic().toBundle());
                 }
             }
         });
         mPresenter.getThemeChildData(id);
         viewLoading.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mAdapter != null && position > 0) {
+            mAdapter.notifyItemChanged(position);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        position = -1;
     }
 
     @Override
