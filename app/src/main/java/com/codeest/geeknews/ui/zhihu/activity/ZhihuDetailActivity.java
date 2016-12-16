@@ -1,7 +1,11 @@
 package com.codeest.geeknews.ui.zhihu.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
@@ -62,6 +66,8 @@ public class ZhihuDetailActivity extends BaseActivity<ZhihuDetailPresenter> impl
     FrameLayout llDetailBottom;
     @BindView(R.id.fab_like)
     FloatingActionButton fabLike;
+    @BindView(R.id.app_bar)
+    AppBarLayout appBar;
 
     int id = 0;
     int allNum = 0;
@@ -83,10 +89,12 @@ public class ZhihuDetailActivity extends BaseActivity<ZhihuDetailPresenter> impl
         return R.layout.activity_zhihu_detail;
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void initEventAndData() {
-        setToolBar(viewToolbar,"");
         Intent intent = getIntent();
+        setToolBar(viewToolbar,"");
+        ViewCompat.setTransitionName(appBar, intent.getExtras().getString("shared-item-name"));
         id = intent.getExtras().getInt("id");
         mPresenter.queryLikeData(id);
         mPresenter.getDetailData(id);
@@ -233,7 +241,7 @@ public class ZhihuDetailActivity extends BaseActivity<ZhihuDetailPresenter> impl
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             pop();
         } else {
-            finishAfterTransition();
+            ActivityCompat.finishAfterTransition(this);
         }
     }
 }

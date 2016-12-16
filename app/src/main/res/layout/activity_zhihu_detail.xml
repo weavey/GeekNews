@@ -9,7 +9,6 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:transitionName="shareView"
         android:fitsSystemWindows="true">
         <net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
             android:id="@+id/clp_toolbar"
