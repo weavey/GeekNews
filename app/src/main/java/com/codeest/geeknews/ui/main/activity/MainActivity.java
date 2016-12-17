@@ -1,9 +1,9 @@
 package com.codeest.geeknews.ui.main.activity;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codeest.geeknews.R;
-import com.codeest.geeknews.app.App;
 import com.codeest.geeknews.app.Constants;
 import com.codeest.geeknews.base.BaseActivity;
 import com.codeest.geeknews.component.RxBus;
@@ -181,23 +180,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         if (mSearchView.isSearchOpen()) {
             mSearchView.closeSearch();
         } else {
-            showExitDialog();
+            ActivityCompat.finishAffinity(this);
         }
     }
 
-    private void showExitDialog() {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-        builder.setTitle("提示");
-        builder.setMessage("确定退出GeekNews吗");
-        builder.setNegativeButton("取消", null);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                App.getInstance().exitApp();
-            }
-        });
-        builder.show();
-    }
+
 
     private SupportFragment getTargetFragment(int item) {
         switch (item) {
