@@ -6,6 +6,8 @@
     <ImageView
         android:id="@+id/iv_welcome_bg"
         android:layout_width="match_parent"
+        android:scaleX="1.12"
+        android:scaleY="1.12"
         android:layout_height="match_parent" />
 
     <TextView
