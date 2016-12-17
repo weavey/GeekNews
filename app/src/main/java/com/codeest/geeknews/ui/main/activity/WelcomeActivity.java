@@ -1,6 +1,7 @@
 package com.codeest.geeknews.ui.main.activity;
 
 import android.content.Intent;
+import android.support.v4.view.ViewCompat;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,7 +44,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter> implements W
     @Override
     public void showContent(WelcomeBean welcomeBean) {
         ImageLoader.load(this, welcomeBean.getImg(), ivWelcomeBg);
-        ivWelcomeBg.animate().scaleX(1.12f).scaleY(1.12f).setDuration(2000).setStartDelay(100).start();
+        ViewCompat.animate(ivWelcomeBg).scaleXBy(-0.05f).scaleYBy(-0.05f).setDuration(2000).setStartDelay(100).start();
         tvWelcomeAuthor.setText(welcomeBean.getText());
     }
 
