@@ -71,7 +71,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends SupportFragm
                 initEventAndData();
             }
         } else {
-            if (!isSupportHidden()) {
+            if (isSupportVisible()) {
                 isInited = true;
                 initEventAndData();
             }

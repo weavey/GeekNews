@@ -38,6 +38,12 @@
                 android:icon="@mipmap/ic_drawer_about"
                 android:checkable="true"
                 android:title="@string/drawer_about"/>
+
+            <item
+                android:id="@+id/drawer_licences"
+                android:icon="@drawable/ic_licenses"
+                android:checkable="false"
+                android:title="@string/navi_software_licenses"/>
         </menu>
     </item>
 </menu>

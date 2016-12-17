@@ -19,6 +19,7 @@ import com.codeest.geeknews.model.bean.SearchEvent;
 import com.codeest.geeknews.presenter.MainPresenter;
 import com.codeest.geeknews.presenter.contract.MainContract;
 import com.codeest.geeknews.ui.gank.fragment.GankMainFragment;
+import com.codeest.geeknews.ui.licenses.LicensesActivity;
 import com.codeest.geeknews.ui.main.fragment.AboutFragment;
 import com.codeest.geeknews.ui.main.fragment.LikeFragment;
 import com.codeest.geeknews.ui.main.fragment.SettingFragment;
@@ -129,6 +130,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                         showFragment = Constants.TYPE_ABOUT;
                         mSearchMenuItem.setVisible(false);
                         break;
+                    case R.id.drawer_licences:
+                        LicensesActivity.showInstance(MainActivity.this);
+                        mDrawerLayout.closeDrawers();
+                        return true;
                 }
                 if(mLastMenuItem != null) {
                     mLastMenuItem.setChecked(false);

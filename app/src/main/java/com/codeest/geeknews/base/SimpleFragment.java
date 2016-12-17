@@ -51,7 +51,7 @@ public abstract class SimpleFragment extends SupportFragment {
                 initEventAndData();
             }
         } else {
-            if (!isSupportHidden()) {
+            if (isSupportVisible()) {
                 isInited = true;
                 initEventAndData();
             }

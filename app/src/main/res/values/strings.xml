@@ -46,4 +46,7 @@
     <string name="app_settings_dialog_title_settings_dialog">权限需求</string>
     <string name="app_settings_dialog_setting">设置</string>
     <string name="app_settings_dialog_cancel">离开应用</string>
+
+    <string name="navi_software_licenses">开放软件证书</string>
+    <string name="software_licenses_count">总计%1$d份证书, %2$d外部库，软件。</string>
 </resources>
