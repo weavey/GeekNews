@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:transitionName="shareView"
+        android:foreground="@drawable/selector_item_background"
         app:cardElevation="3dp"
         app:cardCornerRadius="2dp">
         <ImageView

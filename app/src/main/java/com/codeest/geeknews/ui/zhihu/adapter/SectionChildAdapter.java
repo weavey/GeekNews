@@ -2,15 +2,15 @@ package com.codeest.geeknews.ui.zhihu.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.view.menu.ExpandedMenuView;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codeest.geeknews.R;
+import com.codeest.geeknews.app.App;
 import com.codeest.geeknews.component.ImageLoader;
 import com.codeest.geeknews.model.bean.SectionChildListBean;
 import com.codeest.geeknews.widget.SquareImageView;
@@ -44,24 +44,32 @@ public class SectionChildAdapter extends RecyclerView.Adapter<SectionChildAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        if (mList.get(position).getImages() != null && mList.get(position).getImages().size() > 0) {
+        final SectionChildListBean.StoriesBean listItem = mList.get(position);
+        final StringBuilder url = new StringBuilder("");
+        if (listItem.getImages() != null && listItem.getImages()
+                                                    .size() > 0) {
             holder.ivImage.setVisibility(View.VISIBLE);
-            ImageLoader.load(mContext,mList.get(position).getImages().get(0),holder.ivImage);
+            url.append(listItem.getImages()
+                               .get(0));
+            ImageLoader.load(mContext, url.toString(), holder.ivImage);
         } else {
             holder.ivImage.setVisibility(View.GONE);
         }
-        if (mList.get(position).getReadState()) {
-            holder.tvTitle.setTextColor(ContextCompat.getColor(mContext,R.color.news_read));
+        if (listItem.getReadState()) {
+            holder.tvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.news_read));
         } else {
-            holder.tvTitle.setTextColor(ContextCompat.getColor(mContext,R.color.news_unread));
+            holder.tvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.news_unread));
         }
-        holder.tvTitle.setText(mList.get(position).getTitle());
+        holder.tvTitle.setText(listItem.getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(onItemClickListener != null) {
+                if (onItemClickListener != null) {
                     SquareImageView iv = (SquareImageView) view.findViewById(R.id.iv_daily_item_image);
-                    onItemClickListener.OnItemClick(holder.getAdapterPosition(),iv);
+                    ViewCompat.setTransitionName(iv,
+                                                 App.getInstance()
+                                                    .getString(R.string.transition_share_item_name) + "-" + url);
+                    onItemClickListener.OnItemClick(holder.getAdapterPosition(), iv);
                 }
             }
         });

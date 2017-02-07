@@ -1,7 +1,9 @@
 package com.codeest.geeknews.ui.zhihu.activity;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,6 +44,8 @@ public class ThemeActivity extends BaseActivity<ThemeChildPresenter> implements 
 
     int id;
 
+    private int position = -1;
+
     @Override
     protected void initInject() {
         getActivityComponent().inject(this);
@@ -67,14 +71,16 @@ public class ThemeActivity extends BaseActivity<ThemeChildPresenter> implements 
             public void onItemClick(int position, View shareView) {
                 mPresenter.insertReadToDB(mList.get(position).getId());
                 mAdapter.setReadState(position, true);
-                mAdapter.notifyItemChanged(position);
+                ThemeActivity.this.position = position;
                 Intent intent = new Intent();
                 intent.setClass(mContext, ZhihuDetailActivity.class);
                 intent.putExtra("id", mList.get(position).getId());
                 if (shareView != null) {
-                    mContext.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mContext, shareView, "shareView").toBundle());
+                    String transitionSharedItemName = ViewCompat.getTransitionName(shareView);
+                    intent.putExtra("shared-item-name", transitionSharedItemName);
+                    ActivityCompat.startActivity(ThemeActivity.this,intent, ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, shareView, transitionSharedItemName).toBundle());
                 } else {
-                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mContext).toBundle());
+                    ActivityCompat.startActivity(ThemeActivity.this, intent, ActivityOptionsCompat.makeBasic().toBundle());
                 }
             }
         });
@@ -95,6 +101,20 @@ public class ThemeActivity extends BaseActivity<ThemeChildPresenter> implements 
                 mPresenter.getThemeChildData(id);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mAdapter != null && position > 0) {
+            mAdapter.notifyItemChanged(position);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        position = -1;
     }
 
     @Override

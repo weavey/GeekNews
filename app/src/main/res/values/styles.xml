@@ -8,12 +8,22 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionMenuTextColor">#ffffff</item>
 
-        //沉浸状态栏
+        <!--沉浸状态栏-->
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowTranslucentStatus">true</item>
 
-        //ActionBarDrawerToggle设置颜色
+        <!--ActionBarDrawerToggle设置颜色-->
         <item name="colorControlNormal">@android:color/white</item>
+
+        <!--Activity transition framework-->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/platform_transition</item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/platform_transition</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
     </style>
 
     <style name="TextAppearance.ExpandedTitle"
