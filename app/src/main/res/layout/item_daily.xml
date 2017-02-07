@@ -12,6 +12,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:foreground="@drawable/selector_item_background"
         app:cardBackgroundColor="@color/colorCard"
         app:cardElevation="2dp"
         app:cardCornerRadius="2dp"
@@ -22,7 +23,6 @@
             android:orientation="horizontal">
             <com.codeest.geeknews.widget.SquareImageView
                 android:id="@+id/iv_daily_item_image"
-                android:transitionName="shareView"
                 android:layout_width="@dimen/list_image_size"
                 android:layout_height="@dimen/list_image_size" />
             <TextView

@@ -31,6 +31,8 @@ public class Constants {
 
     public static final int TYPE_ABOUT = 110;
 
+    public static final int TYPE_LICENSES = 111;
+
     //================= KEY ====================
 
 //    public static final String KEY_API = "f95283476506aa756559dd28a56f0c0b"; //需要APIKEY请去 http://apistore.baidu.com/ 申请,复用会减少访问可用次数

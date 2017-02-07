@@ -1,0 +1,150 @@
+{
+  "Licenses": [
+    {
+      "name": "AOSP",
+      "description": "The Android Open Source Project",
+      "libraries": [
+        {
+          "name": "com.android.support:design"
+        },
+        {
+          "name": "com.android.support:recyclerview-v7"
+        },
+        {
+          "name": "com.android.support:appcompat-v7"
+        },
+        {
+          "name": "com.android.support:cardview-v7"
+        }
+      ]
+    },
+    {
+      "name": "Apache-LICENSE-2.0",
+      "description": "Apache License, Version 2.0",
+      "libraries": [
+        {
+          "name": "pub.devrel:easypermissions",
+          "owner": "https://github.com/googlesamples"
+        },
+        {
+          "name": "io.reactivex:rxandroid",
+          "owner": "The RxAndroid authors"
+        },
+        {
+          "name": "io.reactivex:rxjava",
+          "owner": "Netflix, Inc."
+        },
+        {
+          "name": "com.jakewharton.rxbinding",
+          "owner": "Jake Wharton"
+        },
+        {
+          "name": "com.google.code.gson:gson",
+          "owner": "Google Inc."
+        },
+        {
+          "name": "Glide",
+          "owner": "bumptech/glide"
+        },
+        {
+          "name": "com.github.bumptech.glide:okhttp3-integration",
+          "owner": "bumptech/glide"
+        },
+        {
+          "name": "com.squareup.retrofit2",
+          "owner": "Square, Inc."
+        },
+        {
+          "name": "com.squareup.retrofit2:converter-gson",
+          "owner": "Square, Inc."
+        },
+        {
+          "name": "com.squareup.retrofit2:adapter-rxjava",
+          "owner": "Square, Inc."
+        },
+        {
+          "name": "okhttp",
+          "owner": "Square, Inc."
+        },
+        {
+          "name": "com.squareup.okhttp3:logging-interceptor",
+          "owner": "Square, Inc."
+        },
+        {
+          "name": "com.google.dagger:dagger",
+          "owner": "Google"
+        },
+        {
+          "name": "com.google.dagger:dagger-compiler",
+          "owner": "Google"
+        },
+        {
+          "name": "com.jakewharton:butterknife",
+          "owner": "Jake Wharton"
+        },
+        {
+          "name": "com.jakewharton:butterknife-compiler",
+          "owner": "Jake Wharton"
+        },
+        {
+          "name": "com.umeng.analytics:analytics:latest.integration",
+          "owner": "umeng.analytics"
+        },
+        {
+          "name": "com.orhanobut:logger",
+          "owner": "https://github.com/orhanobut"
+        },
+        {
+          "name": "me.yokeyword:fragmentation",
+          "owner": "https://github.com/YoKeyword"
+        },
+        {
+          "name": "com.victor:lib",
+          "owner": "https://github.com/yankai-victor/"
+        },
+        {
+          "name": "net.opacapp:multiline-collapsingtoolbar",
+          "owner": "https://github.com/opacapp/"
+        },
+        {
+          "name": "com.github.chrisbanes:PhotoView",
+          "owner": "Chris Banes"
+        },
+        {
+          "name": "com.miguelcatalan:materialsearchview",
+          "owner": "https://github.com/MiguelCatalan/"
+        },
+        {
+          "name": "com.github.moduth:blockcanary",
+          "owner": "MarkZhai"
+        },
+        {
+          "name": "com.squareup.leakcanary",
+          "owner": "Square, Inc."
+        }
+      ]
+    },
+    {
+      "name": "Prolific Interactive(MIT)",
+      "description": "Prolific Interactive",
+      "libraries": [
+        {
+          "name": "com.prolificinteractive:material-calendarview",
+          "owner": "Prolific Interactive",
+          "copyright": "2016"
+        }
+      ]
+    },
+    {
+      "name": "CDDL+GPL",
+      "description": "COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL)",
+      "libraries": [
+        {
+          "name": "org.glassfish:javax.annotation",
+          "owner": "org.glassfish",
+          "copyright": "2008"
+        }
+      ]
+    }
+  ]
+}
